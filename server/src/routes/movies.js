@@ -14,6 +14,12 @@ router.get('/', async (req, res) => {
       limit,
       order: [['id', 'ASC']]
     });
+    res.json({
+      data: allMovies.rows,
+      currentPage,
+      totalPages: Math.ceil(allMovies.count / pageSize),
+      totalItems: allMovies.count
+    });
     res.json(allMovies);
   } catch (err) {
     console.error(err.message);
