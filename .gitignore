@@ -1,2 +1,5 @@
 .env
 .code/
+.idea/
+.vscode/
+.venv/
