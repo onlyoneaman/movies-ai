@@ -5,7 +5,15 @@ const router = express.Router();
 // Get all movies
 router.get('/', async (req, res) => {
   try {
-    const allMovies = await Movie.findAll();
+    const pageSize = parseInt(req.query.pageSize, 10) || 10;
+    const currentPage = parseInt(req.query.currentPage, 10) || 1;
+    const offset = (currentPage - 1) * pageSize;
+    const limit = pageSize;
+    const allMovies = await Movie.findAndCountAll({
+      offset,
+      limit,
+      order: [['id', 'ASC']]
+    });
     res.json(allMovies);
   } catch (err) {
     console.error(err.message);
