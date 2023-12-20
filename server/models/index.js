@@ -12,6 +12,7 @@ let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
+  config.use_env_variable = 'DEVELOPMENT';
   // Updated to match the structure in config.js
   sequelize = new Sequelize(config.database, config.username, config.password, {
     host: config.host,
