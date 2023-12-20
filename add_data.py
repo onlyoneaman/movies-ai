@@ -50,10 +50,16 @@ encoder = SentenceTransformer("all-MiniLM-L6-v2")
 def main():
     # Load and prepare dataset
     print("Loading dataset...")
-    df=pd.read_csv(MOVIES_FILENAME, 
-                usecols = ['id', 'Name', 'PosterLink', 'Genres', 'Actors', 
-                            'Director','Description', 'DatePublished', 'Keywords'], 
-                parse_dates = ["DatePublished"])
+    useCols = [
+        'id', 'Name', 'PosterLink', 'Genres', 'Actors', 
+        'Director','Description', 'DatePublished', 'Keywords',
+        'RatingValue', 'url'
+    ]
+    df=pd.read_csv(
+        MOVIES_FILENAME, 
+        usecols = useCols,
+        parse_dates = ["DatePublished"]
+    )
     df["year"] = df["DatePublished"].dt.year.fillna(0).astype(int)
     df.drop(["DatePublished"], axis=1, inplace=True)
     df = df[df.year > 1970]
