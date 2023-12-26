@@ -9,7 +9,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      movieId: {
+      movie_id: {
         type: Sequelize.INTEGER
       },
       name: {
@@ -21,13 +21,13 @@ module.exports = {
       plot: {
         type: Sequelize.TEXT
       },
-      posterLink: {
+      poster_link: {
         type: Sequelize.STRING
       },
       genres: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
-      ACTORS: {
+      actors: {
         type: Sequelize.ARRAY(Sequelize.STRING)
       },
       director: {
@@ -39,17 +39,20 @@ module.exports = {
       rating: {
         type: Sequelize.FLOAT
       },
-      WIKI_LINK: {
+      wiki_link: {
         type: Sequelize.STRING
       },
-      IMDB_LINK: {
+      imdb_link: {
         type: Sequelize.STRING
       },
-      PRIMARY_LANGUAGE: {
+      primary_language: {
         type: Sequelize.STRING
       },
       release_year: {
         type: Sequelize.INTEGER
+      },
+      date_published: {
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,

@@ -33,12 +33,46 @@ const mergeData = (movies, plots) => {
     });
   };
 
-const insertIntoPostgres = async (data) => {
-  // Insert data into PostgreSQL
-  // Replace with your logic for PostgreSQL insertion
-//   console.log('Inserting data into PostgreSQL...');
-  const movie = await Movie.create(data);
-//   console.log('Done!');
+const insertIntoPostgres = async (movie) => {
+  try {
+        // it++;
+        // console.log("Inserting movie: ", movie);
+        // return 0;
+        let movieData = {
+          name: movie.Name,
+          description: movie.Description,
+          plot: movie.Plot,
+          release_year: movie.year,
+          poster_link: movie.PosterLink,
+          director: movie.Director,
+          rating: movie.RatingValue,
+          url: movie.url,
+          movie_id: movie.id,
+          imdb_link: movie.url,
+      }
+        const actors = movie.Actors.split(',');
+        const genres = movie.Genres.split(',');
+        const keywords = movie.Keywords.split(',');
+        movieData.actors = actors;
+        movieData.genres = genres;
+        movieData.keywords = keywords;
+        const datePublished = new Date(movie.DatePublished);
+        if(datePublished.toString() !== 'Invalid Date') {
+            movieData.date_published = datePublished;
+        }
+      // search for movie in database
+      // if it exists, update it
+      // if it doesn't exist, create it
+      const movieExists = await Movie.findOne({where: {movie_id: movie.id, name: movie.Name}});
+      if (movieExists) {
+          await movieExists.update(movieData);
+      } else {
+          await Movie.create(movieData);
+      }
+      // await insertIntoPostgres(movieData);
+  } catch (e) {
+      console.error('Error:', movie.Name, e.message);
+  }
 };
 
 const main = async () => {
@@ -62,27 +96,20 @@ const main = async () => {
     }).filter(plot => plot.year > 1970);
 
     console.log("Merging datasets...");
-    const mergedData = mergeData(movies, plots);
+    let mergedData = mergeData(movies, plots);
 
     console.log("Length of merged data: ", mergedData.length);
 
-    let it = 0;
+    // mergedData = mergedData.filter(movie => movie.DatePublished !== 'N/A');
+    // mergedData = mergedData.splice(0, 10);
+
+    // console log random movie
+    console.log(mergedData[Math.floor(Math.random() * mergedData.length)]);
+
+    // mergedData = mergedData.filter(movie => movie.year > 2016);
+
     mergedData.forEach(async movie => {
-        it++;
-        let movieData = {
-            name: movie.Name,
-            description: movie.Plot,
-            release_year: movie.year,
-            poster_link: movie.PosterLink,
-            genres: movie.Genres,
-            actors: movie.Actors,
-            director: movie.Director,
-            keywords: movie.Keywords,
-            rating_value: movie.RatingValue,
-            url: movie.url,
-            movie_id: movie.id
-        }
-        await insertIntoPostgres(movieData);
+        await insertIntoPostgres(movie);
     });
 
   } catch (e) {
