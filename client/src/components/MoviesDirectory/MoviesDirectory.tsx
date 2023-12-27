@@ -21,7 +21,7 @@ const MoviesDirectory = () => {
       query
     }
     const res = await services.movieApis.getMovies(data);
-    console.log(res);
+    // console.log(res);
     if (res.err) {
       console.error(res.err);
       return;

@@ -1,8 +1,9 @@
 {
-  "name": "client",
+  "name": "movies-recommender",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
+  "author": "Aman <2000.aman.sinha@gmail.com>",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
