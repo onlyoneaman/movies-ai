@@ -15,7 +15,6 @@ const PaginationComponent = (
     setPageSize,
     currentPage,
     setCurrentPage,
-    load,
     totalPages
   }: PaginationComponentProps
 ) => {
