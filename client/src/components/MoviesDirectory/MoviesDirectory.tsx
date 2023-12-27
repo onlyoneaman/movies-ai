@@ -8,6 +8,7 @@ const MoviesDirectory = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [load, setLoad] = useState(false);
 
+  const [query, setQuery] = useState("");
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(10);
@@ -15,8 +16,9 @@ const MoviesDirectory = () => {
   const getMovies = async () => {
     setLoad(true);
     const data = {
-      currentPage: currentPage,
-      pageSize: pageSize
+      currentPage,
+      pageSize,
+      query
     }
     const res = await services.movieApis.getMovies(data);
     console.log(res);
@@ -29,15 +31,22 @@ const MoviesDirectory = () => {
     setLoad(false);
   }
 
+  const changeQuery = (e: any) => {
+    setQuery(e.target.value);
+  }
+
   useEffect(() => {
     getMovies();
-  }, [pageSize, currentPage])
+  }, [pageSize, currentPage, query])
 
   return (
     <div>
-      <h1 className={"text-2xl font-bold"}>
-        Movies Directory
-      </h1>
+      <input
+        className={"w-full h-10 px-3 mb-2 text-base bg-gray-300 text-gray-700 placeholder-gray-600 border rounded-lg focus:shadow-outline"}
+        type="text"
+        placeholder="Search..."
+        onChange={changeQuery}
+      />
       <div>
         <ul className={"grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-3"}>
           {movies.map(movie => (

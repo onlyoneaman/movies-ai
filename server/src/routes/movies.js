@@ -1,19 +1,48 @@
 const express = require('express');
 const { Movie } = require('../../models'); // Import the model
 const router = express.Router();
+const { Op } = require('sequelize');
 
 // Get all movies
 router.get('/', async (req, res) => {
   try {
     const pageSize = parseInt(req.query.pageSize, 10) || 50;
     const currentPage = parseInt(req.query.currentPage, 10) || 1;
+    const query = req.query.query || '';
     const offset = (currentPage - 1) * pageSize;
     const limit = pageSize;
-    const allMovies = await Movie.findAndCountAll({
+    let allMovies = await Movie.findAndCountAll({
       offset,
       limit,
-      order: [['id', 'ASC']]
+      order: [['id', 'DESC']]
     });
+    console.log('query', query);
+    if (query) {
+      allMovies = await Movie.findAndCountAll({
+        where: {
+          [Op.or]: [
+            {
+              name: {
+                [Op.iLike]: `%${query}%`
+              }
+            },
+            {
+              description: {
+                [Op.iLike]: `%${query}%`
+              }
+            },
+            {
+              plot: {
+                [Op.iLike]: `%${query}%`
+              }
+            }
+          ]
+        },
+        offset,
+        limit,
+        order: [['id', 'DESC']]
+      });
+    }
     res.json({
       data: allMovies.rows,
       currentPage,
