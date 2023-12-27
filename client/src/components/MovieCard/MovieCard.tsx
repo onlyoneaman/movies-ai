@@ -21,12 +21,15 @@ const MovieCard: React.FC<MovieCardProps> = ({movie, load}) => {
         />
       </div>
       <div className="px-3 py-2">
-        <div
-          className="font-bold text-sm md:text-lg truncate mb-2"
+        <a
+          className="font-bold cursor-pointer text-sm md:text-lg mb-2 underline"
           title={movieTitle}
+          href={movie.imdb_link || movie.wiki_link || "#"}
+          target={"_blank"}
+          rel={"noreferrer"}
         >
           {movieTitle}
-        </div>
+        </a>
         <p className="text-sm truncate">
           {movie.description}...
         </p>

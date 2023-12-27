@@ -17,6 +17,7 @@ type Movie = {
   date_published: string;
   createdAt: string;
   updatedAt: string;
+  url: string;
 };
 
 export default Movie;
