@@ -7,6 +7,8 @@ type PaginationComponentProps = {
   totalPages: number;
 }
 
+const PAGE_SIZE_OPTIONS = [10, 20, 50];
+
 const PaginationComponent = (
   {
     pageSize,
@@ -28,8 +30,23 @@ const PaginationComponent = (
     setCurrentPage(page);
   };
 
+  const handlePageSizeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setPageSize(Number(event.target.value));
+  };
+
   return (
     <div className={"flex py-3"}>
+      <select
+        className={"mx-1 px-2 py-1 rounded-md border border-gray-300 hover:bg-gray-200 bg-gray-300"}
+        value={pageSize}
+        onChange={handlePageSizeChange}
+      >
+        {
+          PAGE_SIZE_OPTIONS.map((option, index) => (
+            <option key={index} value={option}>{option}</option>
+          ))
+        }
+      </select>
       {pageNumbers.map((page, index, array) => (
         <div key={page.toString()}>
           <button
