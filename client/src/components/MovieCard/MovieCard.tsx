@@ -2,22 +2,43 @@ import Movie from "../../types/Movie.ts";
 
 type MovieCardProps = {
   movie: Movie;
+  load: boolean;
 }
 
-const MovieCard: React.FC<MovieCardProps> = ({movie}) => {
+const MovieCard: React.FC<MovieCardProps> = ({movie, load}) => {
+
+  if(load) return <div>Loading...</div>
+
+  const movieTitle = `${movie.name} (${movie.release_year})`;
+
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
-      <img className="w-full max-w-[200px]" src={movie.poster_link} alt={movie.name}/>
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2">{movie.name} ({movie.release_year})</div>
-        <p className="text-gray-700 text-base">
-          {movie.description.substring(0, 150)}...
+    <div className="flex flex-col justify-around max-w-sm p-2 rounded overflow-hidden shadow-lg bg-dark-blue text-sky-blue">
+      <div className={"flex items-center justify-center"}>
+        <img
+          className="w-full max-w-[120px] md:max-w-[160px]"
+          src={movie.poster_link}
+          alt={movie.name}
+        />
+      </div>
+      <div className="px-3 py-2">
+        <div
+          className="font-bold text-sm md:text-lg truncate mb-2"
+          title={movieTitle}
+        >
+          {movieTitle}
+        </div>
+        <p className="text-sm truncate">
+          {movie.description}...
         </p>
       </div>
-      <div className="px-6 pt-4 pb-2">
+      <div className="px-3 py-2">
         {movie.genres.map((genre, index) => (
-          <span key={index}
-                className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{genre}</span>
+          <span
+            key={index}
+            className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2"
+          >
+            {genre}
+          </span>
         ))}
       </div>
     </div>

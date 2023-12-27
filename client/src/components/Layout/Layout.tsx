@@ -5,7 +5,7 @@ import {ReactNode} from "react";
 const Layout = ({children}: {children: ReactNode}) => {
 
   return (
-    <div className="min-h-screen flex flex-col bg-white text-black">
+    <div className="p-5 min-h-screen flex flex-col text-dark-blue bg-soft-cream">
       <Header/>
       <main className="grow">{children}</main>
       <Footer/>

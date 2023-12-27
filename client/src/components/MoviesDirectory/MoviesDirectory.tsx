@@ -1,9 +1,10 @@
 import {useEffect, useState} from "react";
 import MovieCard from "../MovieCard";
 import services from "../../services";
+import Movie from "../../types/Movie.ts";
 
 const MoviesDirectory = () => {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [load, setLoad] = useState(false);
 
   const getMovies = async () => {
@@ -24,11 +25,13 @@ const MoviesDirectory = () => {
 
   return (
     <div>
-      <h1>Movies Directory</h1>
+      <h1 className={"text-2xl font-bold"}>
+        Movies Directory
+      </h1>
       <div>
-        <ul className={"grid grid-cols-4"}>
+        <ul className={"grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-3"}>
           {movies.map(movie => (
-            <MovieCard movie={movie} key={movie.id}/>
+            <MovieCard movie={movie} key={movie.id} load={load} />
           ))}
         </ul>
       </div>
