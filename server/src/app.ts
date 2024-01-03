@@ -14,7 +14,11 @@ app.use(bodyParser.json());
 app.use(cors())
 
 app.get('/', (req: any, res: any) => {
-  res.send('Hello World!');
+  res.send('Hello from moviesapi!');
+});
+
+app.get('/ping', (req: any, res: any) => {
+  res.send('pong');
 });
 
 const movieRouter = require('./routes/movies');
