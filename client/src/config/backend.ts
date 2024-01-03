@@ -1,6 +1,6 @@
 const backend = {
   apiPath: "/api/v1",
-  devBaseURL: "http://localhost:3009",
+  devBaseURL: "http://localhost:3001",
   prodBaseURL: "https://moviesapi.amankumar.ai"
 } as const
 
