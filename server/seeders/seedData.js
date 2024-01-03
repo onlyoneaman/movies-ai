@@ -1,6 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const csv = require('csv-parser');
+const async = require('async');
+
 const {Movie} = require('../models');
 
 const processCSV = (filename, columns) => {
@@ -114,9 +116,9 @@ const main = async () => {
 
     // mergedData = mergedData.filter(movie => movie.year > 2016);
 
-    for (const movie of mergedData) {
+    async.eachLimit(mergedData, 10, async (movie) => {
       await insertIntoPostgres(movie);
-    }
+    });
 
   } catch (e) {
     console.error('Error:', e);
