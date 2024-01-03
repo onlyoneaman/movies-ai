@@ -91,9 +91,15 @@ const main = async () => {
 
     console.log("Loading Plots...");
     let plots = await processCSV(wikiMoviesDataPath, plotColumns);
+
+    console.log("Length of movies: ", movies.length);
     plots = plots.map(plot => {
       return { ...plot, Name: plot.Title, year: plot['Release Year'] };
-    }).filter(plot => plot.year > 1970);
+    })
+
+    // plots = plots.map(plot => {
+    //   return { ...plot, Name: plot.Title, year: plot['Release Year'] };
+    // }).filter(plot => plot.year > 1970);
 
     console.log("Merging datasets...");
     let mergedData = mergeData(movies, plots);
@@ -108,9 +114,9 @@ const main = async () => {
 
     // mergedData = mergedData.filter(movie => movie.year > 2016);
 
-    mergedData.forEach(async movie => {
-        await insertIntoPostgres(movie);
-    });
+    for (const movie of mergedData) {
+      await insertIntoPostgres(movie);
+    }
 
   } catch (e) {
     console.error('Error:', e);
