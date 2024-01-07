@@ -5,6 +5,8 @@ const async = require('async');
 
 const {Movie} = require('../models');
 
+const finalDataPath = path.resolve(__dirname, '../../data/final_data.csv');
+
 const processCSV = (filename, columns) => {
     return new Promise((resolve, reject) => {
       const results = [];
@@ -65,12 +67,15 @@ const insertIntoPostgres = async (movie) => {
       // search for movie in database
       // if it exists, update it
       // if it doesn't exist, create it
-      const movieExists = await Movie.findOne({where: {movie_id: movie.id, name: movie.Name}});
-      if (movieExists) {
-          await movieExists.update(movieData);
-      } else {
-          await Movie.create(movieData);
-      }
+
+
+
+      // const movieExists = await Movie.findOne({where: {movie_id: movie.id, name: movie.Name}});
+      // if (movieExists) {
+      //     await movieExists.update(movieData);
+      // } else {
+      //     await Movie.create(movieData);
+      // }
       // await insertIntoPostgres(movieData);
   } catch (e) {
       console.error('Error:', movie.Name, e.message);
@@ -117,7 +122,9 @@ const main = async () => {
     // mergedData = mergedData.filter(movie => movie.year > 2016);
 
     async.eachLimit(mergedData, 10, async (movie) => {
-      await insertIntoPostgres(movie);
+      // add this to csv
+      // console.log(movie);
+      // await insertIntoPostgres(movie);
     });
 
   } catch (e) {

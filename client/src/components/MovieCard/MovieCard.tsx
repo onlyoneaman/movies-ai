@@ -33,6 +33,13 @@ const MovieCard: React.FC<MovieCardProps> = ({movie, load}) => {
         <p className="text-sm truncate">
           {movie.description}...
         </p>
+        <p>
+          {movie.rating > 0 && (
+            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 my-2">
+              ⭐ {movie.rating}
+            </span>
+          )}
+        </p>
       </div>
       <div className="px-3 py-2">
         {movie.genres.map((genre, index) => (
