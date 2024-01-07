@@ -35,7 +35,7 @@ const MovieCard: React.FC<MovieCardProps> = ({movie, load}) => {
         </p>
         <p>
           {movie.rating > 0 && (
-            <span className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 my-2">
+            <span className="inline-block bg-gray-500 text-black rounded-full px-3 py-1 text-sm font-semibold mr-2 mb-2 my-2">
               ⭐ {movie.rating}
             </span>
           )}
