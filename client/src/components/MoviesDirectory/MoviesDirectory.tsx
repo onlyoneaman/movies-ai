@@ -48,11 +48,25 @@ const MoviesDirectory = () => {
         onChange={changeQuery}
       />
       <div>
-        <ul className={"grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-3"}>
-          {movies.map(movie => (
-            <MovieCard movie={movie} key={movie.id} load={load} />
-          ))}
-        </ul>
+        <div>
+          {
+            movies.length > 0 ? (
+              <ul className={"grid grid-cols-3 md:grid-cols-5 lg:grid-cols-7 gap-3"}>
+                {
+                  movies.map(movie => (
+                    <MovieCard movie={movie} key={movie.id} load={load}/>
+                  ))
+                }
+              </ul>
+            ) : (
+              <div className="w-full text-center p-6">
+                <h1 className="text-xl font-bold">
+                  No results found
+                </h1>
+              </div>
+            )
+          }
+        </div>
       </div>
       <PaginationComponent
         pageSize={pageSize}
